@@ -1,0 +1,50 @@
+name: Deploy to WordPress.org
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - '.gitattributes'
+      - 'README.md'
+      - 'CHANGELOG.md'
+
+jobs:
+  deploy:
+    name: Build and Deploy to WordPress.org
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history needed for version detection
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml, curl
+
+      - name: Install Composer dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+      - name: Extract version from plugin header
+        id: get_version
+        run: |
+          VERSION=$(grep -i "Version:" resend-email-integration.php | head -1 | awk '{print $NF}' | tr -d '\r\n ')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
+
+      - name: WordPress.org Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_PASSWORD: ${{ secrets.WORDPRESS_ORG_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.WORDPRESS_ORG_USERNAME }}
+          SLUG: resend-email-integration
+          VERSION: ${{ steps.get_version.outputs.version }}
+          ASSETS_DIR: .wordpress-org
+

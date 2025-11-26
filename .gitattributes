@@ -1,0 +1,22 @@
+# Git attributes for WordPress plugin distribution
+# Note: vendor/ is in .gitignore, so it won't be committed to the repo
+# But it MUST be included in distribution zips (use build-plugin.sh script)
+
+# Exclude development files from git archive exports
+/.git/ export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/.idea/ export-ignore
+/.vscode/ export-ignore
+*.swp export-ignore
+*.swo export-ignore
+*~ export-ignore
+.DS_Store export-ignore
+Thumbs.db export-ignore
+*.log export-ignore
+
+# Include these files in distribution
+composer.json export
+composer.lock export
+README.md export
+

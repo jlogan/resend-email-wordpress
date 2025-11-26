@@ -1,0 +1,164 @@
+/**
+ * Admin styles for Resend Email Integration plugin.
+ *
+ * @package ResendEmailIntegration
+ */
+
+/* Settings page styles */
+.resend-status {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.resend-status-delivered {
+	background-color: #00a32a;
+	color: #fff;
+}
+
+.resend-status-opened {
+	background-color: #2271b1;
+	color: #fff;
+}
+
+.resend-status-bounced {
+	background-color: #d63638;
+	color: #fff;
+}
+
+.resend-status-failed {
+	background-color: #d63638;
+	color: #fff;
+}
+
+.resend-status-pending {
+	background-color: #dba617;
+	color: #fff;
+}
+
+/* Logs table improvements */
+.wp-list-table .resend-status {
+	margin: 0;
+}
+
+/* Email detail link styling */
+.resend-email-detail-link {
+	color: #2271b1;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.resend-email-detail-link:hover {
+	text-decoration: underline;
+}
+
+/* Modal styles */
+.resend-modal {
+	display: none;
+	position: fixed;
+	z-index: 100000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.resend-modal-content {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 90%;
+	max-width: 800px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+}
+
+.resend-modal-header {
+	padding: 20px;
+	border-bottom: 1px solid #ddd;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #f9f9f9;
+	border-radius: 4px 4px 0 0;
+}
+
+.resend-modal-header h2 {
+	margin: 0;
+	font-size: 20px;
+}
+
+.resend-modal-close {
+	color: #aaa;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+	line-height: 20px;
+}
+
+.resend-modal-close:hover,
+.resend-modal-close:focus {
+	color: #000;
+}
+
+.resend-modal-body {
+	padding: 20px;
+	max-height: 70vh;
+	overflow-y: auto;
+}
+
+.resend-modal-body table {
+	margin: 0;
+}
+
+.resend-modal-body th {
+	text-align: left;
+	padding: 10px;
+	background-color: #f9f9f9;
+	border-bottom: 1px solid #ddd;
+}
+
+.resend-modal-body td {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+/* Settings form spacing */
+.form-table th {
+	width: 200px;
+}
+
+/* Pagination styles */
+.tablenav.bottom {
+	margin-top: 20px;
+	padding-top: 10px;
+	border-top: 1px solid #ddd;
+}
+
+/* Email field layout */
+.resend-email-field-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.resend-email-field-wrapper input[type="text"] {
+	width: 200px;
+}
+
+.resend-email-field-wrapper .resend-email-at {
+	font-size: 16px;
+	font-weight: bold;
+	color: #555;
+}
+
+.resend-email-field-wrapper select {
+	width: 300px;
+}
