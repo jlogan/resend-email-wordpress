@@ -39,8 +39,8 @@ class Resend_Logs_Page {
 	public function add_logs_page() {
 		add_submenu_page(
 			'options-general.php',
-			__( 'Resend Email Logs', 'resend-email-integration' ),
-			__( 'Resend Email Logs', 'resend-email-integration' ),
+			__( 'Resend Email Logs', 'resend-email' ),
+			__( 'Resend Email Logs', 'resend-email' ),
 			'manage_options',
 			'resend-email-logs',
 			array( $this, 'render_logs_page' )
@@ -71,7 +71,7 @@ class Resend_Logs_Page {
 		<div class="wrap">
 			<h1 class="wp-heading-inline"><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<button type="button" id="resend-import-emails-btn" class="page-title-action">
-				<?php esc_html_e( 'Import Emails', 'resend-email-integration' ); ?>
+				<?php esc_html_e( 'Import Emails', 'resend-email' ); ?>
 			</button>
 			<span id="resend-import-status" style="margin-left: 10px;"></span>
 			<hr class="wp-header-end">
@@ -82,7 +82,7 @@ class Resend_Logs_Page {
 				?>
 				<div class="notice notice-error">
 					<p>
-						<strong><?php esc_html_e( 'Error:', 'resend-email-integration' ); ?></strong>
+						<strong><?php esc_html_e( 'Error:', 'resend-email' ); ?></strong>
 						<?php echo esc_html( $emails_data['error'] ); ?>
 					</p>
 				</div>
@@ -123,7 +123,7 @@ class Resend_Logs_Page {
 		// Check if environment is supported.
 		if ( ! Resend_Compat::can_use_resend() ) {
 			return array(
-				'error' => __( 'Resend SDK is not available. Please check your PHP version and Composer dependencies.', 'resend-email-integration' ),
+				'error' => __( 'Resend SDK is not available. Please check your PHP version and Composer dependencies.', 'resend-email' ),
 			);
 		}
 
@@ -131,7 +131,7 @@ class Resend_Logs_Page {
 		$client = Resend_Client_Helper::get_client();
 		if ( ! $client ) {
 			return array(
-				'error' => __( 'Resend API key is missing or invalid. Please configure it in Settings → Resend Email.', 'resend-email-integration' ),
+				'error' => __( 'Resend API key is missing or invalid. Please configure it in Settings → Resend Email.', 'resend-email' ),
 			);
 		}
 
@@ -168,8 +168,11 @@ class Resend_Logs_Page {
 
 			// Debug logging if enabled.
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: Response type: ' . gettype( $response ) );
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: Response class: ' . ( is_object( $response ) ? get_class( $response ) : 'N/A' ) );
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: Emails count: ' . count( $emails ) );
 			}
 
@@ -180,13 +183,14 @@ class Resend_Logs_Page {
 		} catch ( \Exception $e ) {
 			// Log error.
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: Failed to fetch emails - ' . $e->getMessage() );
 			}
 
 			return array(
 				'error' => sprintf(
 					/* translators: %s: Error message */
-					__( 'Failed to fetch emails: %s', 'resend-email-integration' ),
+					__( 'Failed to fetch emails: %s', 'resend-email' ),
 					$e->getMessage()
 				),
 			);
@@ -215,12 +219,12 @@ class Resend_Logs_Page {
 		<table class="wp-list-table widefat fixed striped">
 			<thead>
 				<tr>
-					<th scope="col"><?php esc_html_e( 'Date/Time', 'resend-email-integration' ); ?></th>
-					<th scope="col"><?php esc_html_e( 'To', 'resend-email-integration' ); ?></th>
-					<th scope="col"><?php esc_html_e( 'From', 'resend-email-integration' ); ?></th>
-					<th scope="col"><?php esc_html_e( 'Subject', 'resend-email-integration' ); ?></th>
-					<th scope="col"><?php esc_html_e( 'Status', 'resend-email-integration' ); ?></th>
-					<th scope="col"><?php esc_html_e( 'Message ID', 'resend-email-integration' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'Date/Time', 'resend-email' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'To', 'resend-email' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'From', 'resend-email' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'Subject', 'resend-email' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'Status', 'resend-email' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'Message ID', 'resend-email' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -291,7 +295,7 @@ class Resend_Logs_Page {
 								<a href="#" 
 									class="resend-email-detail-link" 
 									data-email-id="<?php echo esc_attr( $id ); ?>"
-									title="<?php esc_attr_e( 'Click to view email details', 'resend-email-integration' ); ?>">
+									title="<?php esc_attr_e( 'Click to view email details', 'resend-email' ); ?>">
 									<?php echo esc_html( $id ); ?>
 								</a>
 							</code>
@@ -301,7 +305,7 @@ class Resend_Logs_Page {
 				<?php else : ?>
 					<tr>
 						<td colspan="6" style="text-align: center; padding: 20px;">
-							<?php esc_html_e( 'No emails found. Click "Import Emails" to sync emails from Resend.', 'resend-email-integration' ); ?>
+							<?php esc_html_e( 'No emails found. Click "Import Emails" to sync emails from Resend.', 'resend-email' ); ?>
 						</td>
 					</tr>
 				<?php endif; ?>
@@ -316,26 +320,26 @@ class Resend_Logs_Page {
 				<div class="alignleft actions">
 					<?php if ( $page > 1 ) : ?>
 						<a href="<?php echo esc_url( $base_url . '&paged=1' ); ?>" class="button">
-							<?php esc_html_e( 'First Page', 'resend-email-integration' ); ?>
+							<?php esc_html_e( 'First Page', 'resend-email' ); ?>
 						</a>
 						<a href="<?php echo esc_url( $base_url . '&paged=' . ( $page - 1 ) ); ?>" class="button">
-							<?php esc_html_e( 'Previous Page', 'resend-email-integration' ); ?>
+							<?php esc_html_e( 'Previous Page', 'resend-email' ); ?>
 						</a>
 					<?php endif; ?>
 					
 					<span style="margin: 0 10px;">
 						<?php
 						/* translators: %1$d: Current page, %2$d: Total pages */
-						printf( esc_html__( 'Page %1$d of %2$d', 'resend-email-integration' ), esc_html( $page ), esc_html( $total_pages ) );
+						printf( esc_html__( 'Page %1$d of %2$d', 'resend-email' ), esc_html( $page ), esc_html( $total_pages ) );
 						?>
 					</span>
 					
 					<?php if ( $page < $total_pages ) : ?>
 						<a href="<?php echo esc_url( $base_url . '&paged=' . ( $page + 1 ) ); ?>" class="button">
-							<?php esc_html_e( 'Next Page', 'resend-email-integration' ); ?>
+							<?php esc_html_e( 'Next Page', 'resend-email' ); ?>
 						</a>
 						<a href="<?php echo esc_url( $base_url . '&paged=' . $total_pages ); ?>" class="button">
-							<?php esc_html_e( 'Last Page', 'resend-email-integration' ); ?>
+							<?php esc_html_e( 'Last Page', 'resend-email' ); ?>
 						</a>
 					<?php endif; ?>
 				</div>
@@ -348,11 +352,11 @@ class Resend_Logs_Page {
 		<div id="resend-email-detail-modal" class="resend-modal" style="display: none;">
 			<div class="resend-modal-content">
 				<div class="resend-modal-header">
-					<h2><?php esc_html_e( 'Email Details', 'resend-email-integration' ); ?></h2>
+					<h2><?php esc_html_e( 'Email Details', 'resend-email' ); ?></h2>
 					<span class="resend-modal-close">&times;</span>
 				</div>
 				<div class="resend-modal-body" id="resend-email-detail-content">
-					<p><?php esc_html_e( 'Loading...', 'resend-email-integration' ); ?></p>
+					<p><?php esc_html_e( 'Loading...', 'resend-email' ); ?></p>
 				</div>
 			</div>
 		</div>
@@ -370,18 +374,18 @@ class Resend_Logs_Page {
 
 		// Check permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'resend-email' ) ) );
 		}
 
 		// Check if SDK is available.
 		if ( ! Resend_Compat::can_use_resend() ) {
-			wp_send_json_error( array( 'message' => __( 'Resend SDK is not available.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Resend SDK is not available.', 'resend-email' ) ) );
 		}
 
 		// Get Resend client.
 		$client = Resend_Client_Helper::get_client();
 		if ( ! $client ) {
-			wp_send_json_error( array( 'message' => __( 'Resend API key is missing or invalid.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Resend API key is missing or invalid.', 'resend-email' ) ) );
 		}
 
 		try {
@@ -395,7 +399,7 @@ class Resend_Logs_Page {
 
 			$emails = $emails_data['emails'] ?? array();
 			if ( empty( $emails ) ) {
-				wp_send_json_success( array( 'message' => __( 'No emails found to import.', 'resend-email-integration' ), 'imported' => 0 ) );
+				wp_send_json_success( array( 'message' => __( 'No emails found to import.', 'resend-email' ), 'imported' => 0 ) );
 				return;
 			}
 
@@ -437,14 +441,15 @@ class Resend_Logs_Page {
 				array(
 					'message'  => sprintf(
 						/* translators: %d: Number of emails imported */
-						_n( '%d email imported successfully.', '%d emails imported successfully.', $imported, 'resend-email-integration' ),
+						_n( '%d email imported successfully.', '%d emails imported successfully.', $imported, 'resend-email' ),
 						$imported
 					),
 					'imported' => $imported,
 				)
 			);
 		} catch ( \Exception $e ) {
-			wp_send_json_error( array( 'message' => sprintf( __( 'Failed to import emails: %s', 'resend-email-integration' ), $e->getMessage() ) ) );
+			/* translators: %s: Error message */
+			wp_send_json_error( array( 'message' => sprintf( __( 'Failed to import emails: %s', 'resend-email' ), $e->getMessage() ) ) );
 		}
 	}
 
@@ -459,14 +464,14 @@ class Resend_Logs_Page {
 
 		// Check permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'resend-email' ) ) );
 		}
 
 		// Get email ID from POST data.
 		$email_id = isset( $_POST['email_id'] ) ? sanitize_text_field( wp_unslash( $_POST['email_id'] ) ) : '';
 
 		if ( empty( $email_id ) ) {
-			wp_send_json_error( array( 'message' => __( 'Email ID is required.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Email ID is required.', 'resend-email' ) ) );
 		}
 
 		// First, check if email exists in database and if it has HTML content.
@@ -488,13 +493,13 @@ class Resend_Logs_Page {
 		// Need to fetch full details from API.
 		// Check if SDK is available.
 		if ( ! Resend_Compat::can_use_resend() ) {
-			wp_send_json_error( array( 'message' => __( 'Resend SDK is not available.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Resend SDK is not available.', 'resend-email' ) ) );
 		}
 
 		// Get Resend client.
 		$client = Resend_Client_Helper::get_client();
 		if ( ! $client ) {
-			wp_send_json_error( array( 'message' => __( 'Resend API key is missing or invalid.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Resend API key is missing or invalid.', 'resend-email' ) ) );
 		}
 
 		try {
@@ -546,6 +551,7 @@ class Resend_Logs_Page {
 				// Debug logging.
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					$html_length = ( $html && $html !== '' ) ? strlen( $html ) : 0;
+					// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 					error_log( sprintf( 'Resend Email Integration: Retrieved email details for %s - HTML length: %d, Text length: %d', $email_id, $html_length, $text ? strlen( $text ) : 0 ) );
 				}
 			}
@@ -571,7 +577,8 @@ class Resend_Logs_Page {
 				wp_send_json_success( array( 'email' => $full_email_data, 'cached' => false ) );
 			}
 		} catch ( \Exception $e ) {
-			wp_send_json_error( array( 'message' => sprintf( __( 'Failed to retrieve email: %s', 'resend-email-integration' ), $e->getMessage() ) ) );
+			/* translators: %s: Error message */
+			wp_send_json_error( array( 'message' => sprintf( __( 'Failed to retrieve email: %s', 'resend-email' ), $e->getMessage() ) ) );
 		}
 	}
 
@@ -589,7 +596,7 @@ class Resend_Logs_Page {
 
 		// Enqueue CSS.
 		wp_enqueue_style(
-			'resend-email-integration-admin',
+			'resend-email-admin',
 			RESEND_EMAIL_INTEGRATION_PLUGIN_URL . 'assets/css/admin.css',
 			array(),
 			RESEND_EMAIL_INTEGRATION_VERSION
@@ -597,7 +604,7 @@ class Resend_Logs_Page {
 
 		// Enqueue JS.
 		wp_enqueue_script(
-			'resend-email-integration-admin',
+			'resend-email-admin',
 			RESEND_EMAIL_INTEGRATION_PLUGIN_URL . 'assets/js/admin.js',
 			array( 'jquery' ),
 			RESEND_EMAIL_INTEGRATION_VERSION,
@@ -606,17 +613,17 @@ class Resend_Logs_Page {
 
 		// Localize script with AJAX URL and nonces.
 		wp_localize_script(
-			'resend-email-integration-admin',
+			'resend-email-admin',
 			'resendEmailIntegration',
 			array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'resend_get_email_details' ),
 				'importNonce' => wp_create_nonce( 'resend_import_emails' ),
 				'strings' => array(
-					'loading'     => __( 'Loading...', 'resend-email-integration' ),
-					'error'       => __( 'An error occurred.', 'resend-email-integration' ),
-					'importing'   => __( 'Importing emails...', 'resend-email-integration' ),
-					'importBtn'   => __( 'Import Emails', 'resend-email-integration' ),
+					'loading'     => __( 'Loading...', 'resend-email' ),
+					'error'       => __( 'An error occurred.', 'resend-email' ),
+					'importing'   => __( 'Importing emails...', 'resend-email' ),
+					'importBtn'   => __( 'Import Emails', 'resend-email' ),
 				),
 			)
 		);

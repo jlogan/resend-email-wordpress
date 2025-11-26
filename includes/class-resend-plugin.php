@@ -96,7 +96,7 @@ class Resend_Plugin {
 	public static function activate() {
 		// Check PHP version directly (don't rely on class if autoloader hasn't run yet).
 		if ( version_compare( PHP_VERSION, '8.1', '<' ) ) {
-			$plugin_basename = plugin_basename( dirname( dirname( __FILE__ ) ) . '/resend-email-integration.php' );
+			$plugin_basename = plugin_basename( dirname( dirname( __FILE__ ) ) . '/resend-email.php' );
 			if ( function_exists( 'deactivate_plugins' ) ) {
 				deactivate_plugins( $plugin_basename );
 			}
@@ -107,7 +107,7 @@ class Resend_Plugin {
 			if ( function_exists( 'wp_die' ) ) {
 				wp_die( esc_html( $message ) );
 			} else {
-				die( $message );
+				die( esc_html( $message ) );
 			}
 		}
 
@@ -160,8 +160,9 @@ class Resend_Plugin {
 		} else {
 			// Fallback: drop table directly if class not available.
 			global $wpdb;
-			$table_name = $wpdb->prefix . 'resend_email_cache';
-			$wpdb->query( "DROP TABLE IF EXISTS $table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$resend_email_integration_table_name = $wpdb->prefix . 'resend_email_cache';
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.NotPrepared
+			$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $resend_email_integration_table_name ) . '`' );
 		}
 
 		// Flush rewrite rules if needed.

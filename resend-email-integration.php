@@ -4,13 +4,12 @@
  * Plugin URI: https://github.com/resend/resend-wordpress
  * Description: Integrates WordPress email functionality with Resend using the official Resend PHP SDK. Replaces wp_mail behavior to send all emails through Resend.
  * Version: 1.0.0
- * Author: Resend
- * Author URI: https://resend.com
- * Text Domain: resend-email-integration
- * Domain Path: /languages
+ * Author: Brogrammers Agency
+ * Author URI: https://brogrammersagency.com
+ * Text Domain: resend-email
  * Requires PHP: 8.1
- * License: MIT
- * License URI: https://opensource.org/licenses/MIT
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @package ResendEmailIntegration
  */
@@ -38,8 +37,8 @@ if ( class_exists( 'Resend_Email_Integration\Resend_Plugin' ) ) {
 }
 
 // Check for Composer autoloader.
-$autoloader_path = RESEND_EMAIL_INTEGRATION_PLUGIN_DIR . 'vendor/autoload.php';
-if ( ! file_exists( $autoloader_path ) ) {
+$resend_email_integration_autoloader_path = RESEND_EMAIL_INTEGRATION_PLUGIN_DIR . 'vendor/autoload.php';
+if ( ! file_exists( $resend_email_integration_autoloader_path ) ) {
 	// Show admin notice if Composer dependencies are missing.
 	add_action(
 		'admin_notices',
@@ -47,8 +46,8 @@ if ( ! file_exists( $autoloader_path ) ) {
 			?>
 			<div class="notice notice-error">
 				<p>
-					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email-integration' ); ?></strong>
-					<?php esc_html_e( 'Composer dependencies are missing. Please run `composer install` in the plugin directory.', 'resend-email-integration' ); ?>
+					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email' ); ?></strong>
+					<?php esc_html_e( 'Composer dependencies are missing. Please run `composer install` in the plugin directory.', 'resend-email' ); ?>
 				</p>
 			</div>
 			<?php
@@ -59,19 +58,19 @@ if ( ! file_exists( $autoloader_path ) ) {
 
 // Load Composer autoloader only if Resend class doesn't already exist.
 // Check if Resend class exists OR if the Resend.php file has already been included.
-$resend_class_file = RESEND_EMAIL_INTEGRATION_PLUGIN_DIR . 'vendor/resend/resend-php/src/Resend.php';
-$resend_file_included = false;
-if ( file_exists( $resend_class_file ) ) {
-	$resend_file_normalized = realpath( $resend_class_file );
-	$included_files = array_map( 'realpath', get_included_files() );
-	$included_files = array_filter( $included_files );
-	$resend_file_included = $resend_file_normalized && in_array( $resend_file_normalized, $included_files, true );
+$resend_email_integration_resend_class_file = RESEND_EMAIL_INTEGRATION_PLUGIN_DIR . 'vendor/resend/resend-php/src/Resend.php';
+$resend_email_integration_file_included = false;
+if ( file_exists( $resend_email_integration_resend_class_file ) ) {
+	$resend_email_integration_file_normalized = realpath( $resend_email_integration_resend_class_file );
+	$resend_email_integration_included_files = array_map( 'realpath', get_included_files() );
+	$resend_email_integration_included_files = array_filter( $resend_email_integration_included_files );
+	$resend_email_integration_file_included = $resend_email_integration_file_normalized && in_array( $resend_email_integration_file_normalized, $resend_email_integration_included_files, true );
 }
 
-if ( file_exists( $autoloader_path ) && ! class_exists( 'Resend', false ) && ! $resend_file_included ) {
+if ( file_exists( $resend_email_integration_autoloader_path ) && ! class_exists( 'Resend', false ) && ! $resend_email_integration_file_included ) {
 	// Use require_once which should prevent duplicate includes in the same execution context.
 	// The 'false' parameter in class_exists prevents autoloading, which could cause issues.
-	require_once $autoloader_path;
+	require_once $resend_email_integration_autoloader_path;
 }
 
 // Manually require plugin classes to ensure they're loaded.
@@ -107,11 +106,11 @@ register_deactivation_hook( __FILE__, array( 'Resend_Email_Integration\Resend_Pl
  *
  * @return void
  */
-function run_resend_email_integration() {
+function resend_email_integration_run() {
 	$plugin = new Resend_Email_Integration\Resend_Plugin();
 	$plugin->run();
 }
 
 // Initialize the plugin.
-run_resend_email_integration();
+resend_email_integration_run();
 

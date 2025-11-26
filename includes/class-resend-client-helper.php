@@ -63,6 +63,7 @@ class Resend_Client_Helper {
 		} catch ( \Exception $e ) {
 			// Log error but don't expose details.
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: Failed to initialize client - ' . $e->getMessage() );
 			}
 			return null;
@@ -133,6 +134,7 @@ class Resend_Client_Helper {
 		} catch ( \Exception $e ) {
 			// Log error but don't expose details.
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: Failed to fetch verified domains - ' . $e->getMessage() );
 			}
 			return array();

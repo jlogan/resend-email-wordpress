@@ -46,10 +46,10 @@ class Resend_Admin_Settings {
 	 */
 	public function add_settings_page() {
 		add_options_page(
-			__( 'Resend Email Settings', 'resend-email-integration' ),
-			__( 'Resend Email', 'resend-email-integration' ),
+			__( 'Resend Email Settings', 'resend-email' ),
+			__( 'Resend Email', 'resend-email' ),
 			'manage_options',
-			'resend-email-integration',
+			'resend-email',
 			array( $this, 'render_settings_page' )
 		);
 	}
@@ -115,49 +115,49 @@ class Resend_Admin_Settings {
 		// Add settings sections.
 		add_settings_section(
 			'resend_email_main_section',
-			__( 'Main Settings', 'resend-email-integration' ),
+			__( 'Main Settings', 'resend-email' ),
 			null,
-			'resend-email-integration'
+			'resend-email'
 		);
 
 		// Add settings fields.
 		add_settings_field(
 			'resend_api_key',
-			__( 'Resend API Key', 'resend-email-integration' ),
+			__( 'Resend API Key', 'resend-email' ),
 			array( $this, 'render_api_key_field' ),
-			'resend-email-integration',
+			'resend-email',
 			'resend_email_main_section'
 		);
 
 		add_settings_field(
 			'resend_from_email',
-			__( 'Default From Email Address', 'resend-email-integration' ),
+			__( 'Default From Email Address', 'resend-email' ),
 			array( $this, 'render_from_email_field' ),
-			'resend-email-integration',
+			'resend-email',
 			'resend_email_main_section'
 		);
 
 		add_settings_field(
 			'resend_from_name',
-			__( 'Default From Name', 'resend-email-integration' ),
+			__( 'Default From Name', 'resend-email' ),
 			array( $this, 'render_from_name_field' ),
-			'resend-email-integration',
+			'resend-email',
 			'resend_email_main_section'
 		);
 
 		add_settings_field(
 			'resend_force_from',
-			__( 'Force From Name and Email', 'resend-email-integration' ),
+			__( 'Force From Name and Email', 'resend-email' ),
 			array( $this, 'render_force_from_field' ),
-			'resend-email-integration',
+			'resend-email',
 			'resend_email_main_section'
 		);
 
 		add_settings_field(
 			'resend_override',
-			__( 'Enable Resend Override', 'resend-email-integration' ),
+			__( 'Enable Resend Override', 'resend-email' ),
 			array( $this, 'render_override_field' ),
-			'resend-email-integration',
+			'resend-email',
 			'resend_email_main_section'
 		);
 	}
@@ -175,7 +175,7 @@ class Resend_Admin_Settings {
 
 		// Basic email validation.
 		if ( ! is_email( $value ) ) {
-			return new \WP_Error( 'invalid_email', __( 'Please enter a valid email address.', 'resend-email-integration' ) );
+			return new \WP_Error( 'invalid_email', __( 'Please enter a valid email address.', 'resend-email' ) );
 		}
 
 		// Check if domain is verified (only if API key is set).
@@ -188,14 +188,14 @@ class Resend_Admin_Settings {
 				if ( empty( $verified_domains ) ) {
 					return new \WP_Error(
 						'no_verified_domains',
-						__( 'No verified domains found in your Resend account. Please verify a domain in your Resend dashboard.', 'resend-email-integration' )
+						__( 'No verified domains found in your Resend account. Please verify a domain in your Resend dashboard.', 'resend-email' )
 					);
 				} else {
 					return new \WP_Error(
 						'unverified_domain',
 						sprintf(
 							/* translators: %s: Comma-separated list of verified domains */
-							__( 'The email domain must match one of your verified domains in Resend. Verified domains: %s', 'resend-email-integration' ),
+							__( 'The email domain must match one of your verified domains in Resend. Verified domains: %s', 'resend-email' ),
 							esc_html( implode( ', ', $verified_domains ) )
 						)
 					);
@@ -234,11 +234,11 @@ class Resend_Admin_Settings {
 			id="resend_test_api_key" 
 			class="button button-secondary" 
 			style="margin-left: 10px;">
-			<?php esc_html_e( 'Test API Key', 'resend-email-integration' ); ?>
+			<?php esc_html_e( 'Test API Key', 'resend-email' ); ?>
 		</button>
 		<span id="resend_api_key_test_result" style="margin-left: 10px;"></span>
 		<p class="description">
-			<?php esc_html_e( 'Enter your Resend API key. You can find this in your Resend dashboard.', 'resend-email-integration' ); ?>
+			<?php esc_html_e( 'Enter your Resend API key. You can find this in your Resend dashboard.', 'resend-email' ); ?>
 		</p>
 		<?php
 	}
@@ -277,13 +277,13 @@ class Resend_Admin_Settings {
 				id="resend_from_email_local" 
 				value="<?php echo esc_attr( $email_local ); ?>" 
 				class="regular-text" 
-				placeholder="<?php esc_attr_e( 'email', 'resend-email-integration' ); ?>" />
+				placeholder="<?php esc_attr_e( 'email', 'resend-email' ); ?>" />
 			<span class="resend-email-at">@</span>
 			<select id="resend_from_email_domain" 
 				class="regular-text"
 				<?php echo empty( $verified_domains ) ? 'disabled' : ''; ?>>
 				<?php if ( empty( $verified_domains ) ) : ?>
-					<option value=""><?php esc_html_e( 'No verified domains found', 'resend-email-integration' ); ?></option>
+					<option value=""><?php esc_html_e( 'No verified domains found', 'resend-email' ); ?></option>
 				<?php else : ?>
 					<?php foreach ( $verified_domains as $domain ) : ?>
 						<option value="<?php echo esc_attr( $domain ); ?>" <?php selected( $email_domain, $domain ); ?>>
@@ -296,11 +296,11 @@ class Resend_Admin_Settings {
 		
 		<?php if ( ! empty( $verified_domains ) ) : ?>
 			<p class="description">
-				<?php esc_html_e( 'Select a verified domain from your Resend account.', 'resend-email-integration' ); ?>
+				<?php esc_html_e( 'Select a verified domain from your Resend account.', 'resend-email' ); ?>
 			</p>
 		<?php else : ?>
 			<p class="description">
-				<?php esc_html_e( 'No verified domains found. Please verify a domain in your Resend dashboard and refresh this page.', 'resend-email-integration' ); ?>
+				<?php esc_html_e( 'No verified domains found. Please verify a domain in your Resend dashboard and refresh this page.', 'resend-email' ); ?>
 			</p>
 		<?php endif; ?>
 		<?php
@@ -320,7 +320,7 @@ class Resend_Admin_Settings {
 			value="<?php echo esc_attr( $from_name ); ?>" 
 			class="regular-text" />
 		<p class="description">
-			<?php esc_html_e( 'The display name for the sender.', 'resend-email-integration' ); ?>
+			<?php esc_html_e( 'The display name for the sender.', 'resend-email' ); ?>
 		</p>
 		<?php
 	}
@@ -339,10 +339,10 @@ class Resend_Admin_Settings {
 				id="resend_override" 
 				value="1" 
 				<?php checked( $override, true ); ?> />
-			<?php esc_html_e( 'Enable Resend to handle all WordPress emails', 'resend-email-integration' ); ?>
+			<?php esc_html_e( 'Enable Resend to handle all WordPress emails', 'resend-email' ); ?>
 		</label>
 		<p class="description">
-			<?php esc_html_e( 'When enabled, all wp_mail() calls will be routed through Resend. When disabled, WordPress will use its default email configuration.', 'resend-email-integration' ); ?>
+			<?php esc_html_e( 'When enabled, all wp_mail() calls will be routed through Resend. When disabled, WordPress will use its default email configuration.', 'resend-email' ); ?>
 		</p>
 		<?php
 	}
@@ -361,10 +361,10 @@ class Resend_Admin_Settings {
 				id="resend_force_from" 
 				value="1" 
 				<?php checked( $force_from, true ); ?> />
-			<?php esc_html_e( 'Force the defined From Name and Email address for all WordPress emails', 'resend-email-integration' ); ?>
+			<?php esc_html_e( 'Force the defined From Name and Email address for all WordPress emails', 'resend-email' ); ?>
 		</label>
 		<p class="description">
-			<?php esc_html_e( 'When enabled, the From Name and Email Address defined above will be used for ALL emails sent through WordPress, overriding any From headers set by plugins or themes.', 'resend-email-integration' ); ?>
+			<?php esc_html_e( 'When enabled, the From Name and Email Address defined above will be used for ALL emails sent through WordPress, overriding any From headers set by plugins or themes.', 'resend-email' ); ?>
 		</p>
 		<?php
 	}
@@ -388,7 +388,7 @@ class Resend_Admin_Settings {
 			add_settings_error(
 				'resend_email_messages',
 				'resend_email_message',
-				__( 'Settings saved.', 'resend-email-integration' ),
+				__( 'Settings saved.', 'resend-email' ),
 				'success'
 			);
 		}
@@ -401,20 +401,20 @@ class Resend_Admin_Settings {
 			<form action="options.php" method="post">
 				<?php
 				settings_fields( self::OPTION_GROUP );
-				do_settings_sections( 'resend-email-integration' );
-				submit_button( __( 'Save Settings', 'resend-email-integration' ) );
+				do_settings_sections( 'resend-email' );
+				submit_button( __( 'Save Settings', 'resend-email' ) );
 				?>
 			</form>
 
 			<hr />
 
-			<h2><?php esc_html_e( 'Send Test Email', 'resend-email-integration' ); ?></h2>
+			<h2><?php esc_html_e( 'Send Test Email', 'resend-email' ); ?></h2>
 			<form method="post" action="">
 				<?php wp_nonce_field( 'resend_send_test_email', 'resend_test_email_nonce' ); ?>
 				<table class="form-table">
 					<tr>
 						<th scope="row">
-							<label for="resend_test_email_to"><?php esc_html_e( 'To Email', 'resend-email-integration' ); ?></label>
+							<label for="resend_test_email_to"><?php esc_html_e( 'To Email', 'resend-email' ); ?></label>
 						</th>
 						<td>
 							<input type="email" 
@@ -427,29 +427,29 @@ class Resend_Admin_Settings {
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="resend_test_email_subject"><?php esc_html_e( 'Subject', 'resend-email-integration' ); ?></label>
+							<label for="resend_test_email_subject"><?php esc_html_e( 'Subject', 'resend-email' ); ?></label>
 						</th>
 						<td>
 							<input type="text" 
 								name="resend_test_email_subject" 
 								id="resend_test_email_subject" 
 								class="regular-text" 
-								value="<?php esc_attr_e( 'Resend Test Email', 'resend-email-integration' ); ?>" />
+								value="<?php esc_attr_e( 'Resend Test Email', 'resend-email' ); ?>" />
 						</td>
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="resend_test_email_message"><?php esc_html_e( 'Message', 'resend-email-integration' ); ?></label>
+							<label for="resend_test_email_message"><?php esc_html_e( 'Message', 'resend-email' ); ?></label>
 						</th>
 						<td>
 							<textarea name="resend_test_email_message" 
 								id="resend_test_email_message" 
 								class="large-text" 
-								rows="5"><?php echo esc_textarea( __( 'This is a test email sent using Resend Email Integration.', 'resend-email-integration' ) ); ?></textarea>
+								rows="5"><?php echo esc_textarea( __( 'This is a test email sent using Resend Email Integration.', 'resend-email' ) ); ?></textarea>
 						</td>
 					</tr>
 				</table>
-				<?php submit_button( __( 'Send Test Email', 'resend-email-integration' ), 'secondary' ); ?>
+				<?php submit_button( __( 'Send Test Email', 'resend-email' ), 'secondary' ); ?>
 			</form>
 		</div>
 		<?php
@@ -471,7 +471,7 @@ class Resend_Admin_Settings {
 			add_settings_error(
 				'resend_email_messages',
 				'resend_email_message',
-				__( 'Security check failed. Please try again.', 'resend-email-integration' ),
+				__( 'Security check failed. Please try again.', 'resend-email' ),
 				'error'
 			);
 			return;
@@ -484,14 +484,14 @@ class Resend_Admin_Settings {
 
 		// Get form data.
 		$to      = isset( $_POST['resend_test_email_to'] ) ? sanitize_email( wp_unslash( $_POST['resend_test_email_to'] ) ) : '';
-		$subject = isset( $_POST['resend_test_email_subject'] ) ? sanitize_text_field( wp_unslash( $_POST['resend_test_email_subject'] ) ) : __( 'Resend Test Email', 'resend-email-integration' );
-		$message = isset( $_POST['resend_test_email_message'] ) ? wp_kses_post( wp_unslash( $_POST['resend_test_email_message'] ) ) : __( 'This is a test email sent using Resend Email Integration.', 'resend-email-integration' );
+		$subject = isset( $_POST['resend_test_email_subject'] ) ? sanitize_text_field( wp_unslash( $_POST['resend_test_email_subject'] ) ) : __( 'Resend Test Email', 'resend-email' );
+		$message = isset( $_POST['resend_test_email_message'] ) ? wp_kses_post( wp_unslash( $_POST['resend_test_email_message'] ) ) : __( 'This is a test email sent using Resend Email Integration.', 'resend-email' );
 
 		if ( empty( $to ) || ! is_email( $to ) ) {
 			add_settings_error(
 				'resend_email_messages',
 				'resend_email_message',
-				__( 'Please enter a valid email address.', 'resend-email-integration' ),
+				__( 'Please enter a valid email address.', 'resend-email' ),
 				'error'
 			);
 			return;
@@ -504,14 +504,14 @@ class Resend_Admin_Settings {
 			add_settings_error(
 				'resend_email_messages',
 				'resend_email_message',
-				__( 'Test email sent successfully!', 'resend-email-integration' ),
+				__( 'Test email sent successfully!', 'resend-email' ),
 				'success'
 			);
 		} else {
 			add_settings_error(
 				'resend_email_messages',
 				'resend_email_message',
-				__( 'Failed to send test email. Please check your settings and try again.', 'resend-email-integration' ),
+				__( 'Failed to send test email. Please check your settings and try again.', 'resend-email' ),
 				'error'
 			);
 		}
@@ -525,7 +525,7 @@ class Resend_Admin_Settings {
 	public function display_admin_notices() {
 		// Only show on our settings page.
 		$screen = get_current_screen();
-		if ( ! $screen || 'settings_page_resend-email-integration' !== $screen->id ) {
+		if ( ! $screen || 'settings_page_resend-email' !== $screen->id ) {
 			return;
 		}
 
@@ -537,8 +537,8 @@ class Resend_Admin_Settings {
 			?>
 			<div class="notice notice-warning">
 				<p>
-					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email-integration' ); ?></strong>
-					<?php esc_html_e( 'API key is missing. Please enter your Resend API key to enable email sending.', 'resend-email-integration' ); ?>
+					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email' ); ?></strong>
+					<?php esc_html_e( 'API key is missing. Please enter your Resend API key to enable email sending.', 'resend-email' ); ?>
 				</p>
 			</div>
 			<?php
@@ -556,19 +556,19 @@ class Resend_Admin_Settings {
 
 		// Check permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'resend-email' ) ) );
 		}
 
 		// Get API key from POST data.
 		$api_key = isset( $_POST['api_key'] ) ? sanitize_text_field( wp_unslash( $_POST['api_key'] ) ) : '';
 
 		if ( empty( $api_key ) ) {
-			wp_send_json_error( array( 'message' => __( 'API key is required.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'API key is required.', 'resend-email' ) ) );
 		}
 
 		// Check if SDK is available.
 		if ( ! Resend_Compat::can_use_resend() ) {
-			wp_send_json_error( array( 'message' => __( 'Resend SDK is not available.', 'resend-email-integration' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Resend SDK is not available.', 'resend-email' ) ) );
 		}
 
 		try {
@@ -580,11 +580,12 @@ class Resend_Admin_Settings {
 			$response = $client->domains->list();
 
 			// If we get here, the API key is valid.
-			$message = __( 'API key is valid!', 'resend-email-integration' );
+			$message = __( 'API key is valid!', 'resend-email' );
 
 			wp_send_json_success( array( 'message' => $message ) );
 		} catch ( \Exception $e ) {
-			wp_send_json_error( array( 'message' => sprintf( __( 'API key test failed: %s', 'resend-email-integration' ), $e->getMessage() ) ) );
+			/* translators: %s: Error message */
+			wp_send_json_error( array( 'message' => sprintf( __( 'API key test failed: %s', 'resend-email' ), $e->getMessage() ) ) );
 		}
 	}
 
@@ -596,13 +597,13 @@ class Resend_Admin_Settings {
 	 */
 	public function enqueue_admin_assets( $hook ) {
 		// Only load on our settings page.
-		if ( 'settings_page_resend-email-integration' !== $hook ) {
+		if ( 'settings_page_resend-email' !== $hook ) {
 			return;
 		}
 
 		// Enqueue CSS.
 		wp_enqueue_style(
-			'resend-email-integration-admin',
+			'resend-email-admin',
 			RESEND_EMAIL_INTEGRATION_PLUGIN_URL . 'assets/css/admin.css',
 			array(),
 			RESEND_EMAIL_INTEGRATION_VERSION
@@ -610,7 +611,7 @@ class Resend_Admin_Settings {
 
 		// Enqueue JS if needed.
 		wp_enqueue_script(
-			'resend-email-integration-admin',
+			'resend-email-admin',
 			RESEND_EMAIL_INTEGRATION_PLUGIN_URL . 'assets/js/admin.js',
 			array( 'jquery' ),
 			RESEND_EMAIL_INTEGRATION_VERSION,
@@ -619,23 +620,23 @@ class Resend_Admin_Settings {
 
 		// Localize script with AJAX URL and nonce.
 		wp_localize_script(
-			'resend-email-integration-admin',
+			'resend-email-admin',
 			'resendEmailIntegration',
 			array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'resend_test_api_key' ),
 				'strings' => array(
-					'testApiKey'      => __( 'Test API Key', 'resend-email-integration' ),
-					'testing'         => __( 'Testing...', 'resend-email-integration' ),
-					'apiKeyRequired'  => __( 'Please enter an API key first.', 'resend-email-integration' ),
-					'error'           => __( 'An error occurred.', 'resend-email-integration' ),
+					'testApiKey'      => __( 'Test API Key', 'resend-email' ),
+					'testing'         => __( 'Testing...', 'resend-email' ),
+					'apiKeyRequired'  => __( 'Please enter an API key first.', 'resend-email' ),
+					'error'           => __( 'An error occurred.', 'resend-email' ),
 				),
 			)
 		);
 
 		// Add inline script to handle email field combination.
 		wp_add_inline_script(
-			'resend-email-integration-admin',
+			'resend-email-admin',
 			'
 			jQuery(document).ready(function($) {
 				function updateFromEmail() {

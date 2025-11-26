@@ -91,6 +91,7 @@ class Resend_Mailer {
 			
 			// Log a warning if domain is not verified (but still use it).
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG && ! Resend_Client_Helper::validate_from_email_domain( $provided_email ) ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( sprintf( 'Resend Email Integration: Using unverified domain "%s" from From header. Email may fail if domain is not verified in Resend.', $provided_email ) );
 			}
 		}
@@ -98,6 +99,7 @@ class Resend_Mailer {
 		// Validate that FROM email is set and not empty.
 		if ( empty( $from_email ) ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: FROM email is not configured. Please set it in Settings → Resend Email.' );
 			}
 			return false;
@@ -155,6 +157,7 @@ class Resend_Mailer {
 
 			// Log success if WP_DEBUG is enabled.
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: Email sent successfully' );
 			}
 
@@ -162,6 +165,7 @@ class Resend_Mailer {
 		} catch ( \Exception $e ) {
 			// Log error.
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( 'Resend Email Integration: Failed to send email - ' . $e->getMessage() );
 			}
 

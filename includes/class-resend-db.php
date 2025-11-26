@@ -77,9 +77,10 @@ class Resend_DB {
 		$table_name = self::get_table_name();
 		$email_id = sanitize_text_field( $email_id );
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$result = $wpdb->get_row(
 			$wpdb->prepare(
-				"SELECT * FROM $table_name WHERE id = %s",
+				'SELECT * FROM `' . esc_sql( $table_name ) . '` WHERE id = %s',
 				$email_id
 			),
 			ARRAY_A
@@ -174,7 +175,8 @@ class Resend_DB {
 		$scheduled_at = ! empty( $email_data['scheduled_at'] ) ? sanitize_text_field( $email_data['scheduled_at'] ) : null;
 
 		// Check if email already exists.
-		$existing = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM $table_name WHERE id = %s", $id ) );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$existing = $wpdb->get_var( $wpdb->prepare( 'SELECT id FROM `' . esc_sql( $table_name ) . '` WHERE id = %s', $id ) );
 
 		if ( $existing ) {
 			// Update existing record.
@@ -204,6 +206,7 @@ class Resend_DB {
 				$update_format[] = '%s';
 			}
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$result = $wpdb->update(
 				$table_name,
 				$update_data,
@@ -231,6 +234,7 @@ class Resend_DB {
 
 			$insert_format = array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' );
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 			$result = $wpdb->insert( $table_name, $insert_data, $insert_format );
 		}
 
@@ -248,9 +252,10 @@ class Resend_DB {
 
 		$table_name = self::get_table_name();
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$result = $wpdb->query(
 			$wpdb->prepare(
-				"DELETE FROM $table_name WHERE cached_at < DATE_SUB(NOW(), INTERVAL %d DAY)",
+				'DELETE FROM `' . esc_sql( $table_name ) . '` WHERE cached_at < DATE_SUB(NOW(), INTERVAL %d DAY)',
 				$days_old
 			)
 		);
@@ -274,9 +279,10 @@ class Resend_DB {
 		$email_id = sanitize_text_field( $email_id );
 
 		// Check if html_content is not NULL (NULL means not fetched, empty string means fetched but no HTML).
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$result = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT html_content IS NOT NULL FROM $table_name WHERE id = %s",
+				'SELECT html_content IS NOT NULL FROM `' . esc_sql( $table_name ) . '` WHERE id = %s',
 				$email_id
 			)
 		);
@@ -297,12 +303,14 @@ class Resend_DB {
 		$table_name = self::get_table_name();
 
 		// Get total count.
-		$total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		$total = (int) $wpdb->get_var( 'SELECT COUNT(*) FROM `' . esc_sql( $table_name ) . '`' );
 
 		// Get emails ordered by created_at DESC.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM $table_name ORDER BY created_at DESC LIMIT %d OFFSET %d",
+				'SELECT * FROM `' . esc_sql( $table_name ) . '` ORDER BY created_at DESC LIMIT %d OFFSET %d',
 				$limit,
 				$offset
 			),
@@ -366,7 +374,8 @@ class Resend_DB {
 		global $wpdb;
 
 		$table_name = self::get_table_name();
-		$wpdb->query( "DROP TABLE IF EXISTS $table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.NotPrepared
+		$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $table_name ) . '`' );
 	}
 }
 

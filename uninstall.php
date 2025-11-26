@@ -23,8 +23,9 @@ delete_transient( 'resend_verified_domains' );
 
 // Drop email cache table.
 global $wpdb;
-$table_name = $wpdb->prefix . 'resend_email_cache';
-$wpdb->query( "DROP TABLE IF EXISTS $table_name" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+$resend_email_integration_table_name = $wpdb->prefix . 'resend_email_cache';
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.NotPrepared
+$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $resend_email_integration_table_name ) . '`' );
 
 // Clear any scheduled events if any were added in the future.
 // wp_clear_scheduled_hook( 'resend_email_integration_cron' );
