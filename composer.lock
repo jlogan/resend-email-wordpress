@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36f64f24c3013b2709d946f9f2647d55",
+    "content-hash": "0d203c506a119669799ed215de6fcbb1",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -537,16 +537,16 @@
         },
         {
             "name": "resend/resend-php",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/resend/resend-php.git",
-                "reference": "9088f169bfc8373ef52a061200c81912451750f0"
+                "reference": "c1ce4ee5dc8ca90a5e6a2dc6d772a06abbe7c9d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/resend/resend-php/zipball/9088f169bfc8373ef52a061200c81912451750f0",
-                "reference": "9088f169bfc8373ef52a061200c81912451750f0",
+                "url": "https://api.github.com/repos/resend/resend-php/zipball/c1ce4ee5dc8ca90a5e6a2dc6d772a06abbe7c9d3",
+                "reference": "c1ce4ee5dc8ca90a5e6a2dc6d772a06abbe7c9d3",
                 "shasum": ""
             },
             "require": {
@@ -556,7 +556,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.13",
                 "mockery/mockery": "^1.6",
-                "pestphp/pest": "^2.0"
+                "pestphp/pest": "^2.0|^3.0|^4.0"
             },
             "type": "library",
             "autoload": {
@@ -588,9 +588,9 @@
             ],
             "support": {
                 "issues": "https://github.com/resend/resend-php/issues",
-                "source": "https://github.com/resend/resend-php/tree/v1.0.1"
+                "source": "https://github.com/resend/resend-php/tree/v1.1.0"
             },
-            "time": "2025-11-18T18:01:57+00:00"
+            "time": "2025-11-26T08:41:40+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -670,5 +670,5 @@
         "php": ">=8.1"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
