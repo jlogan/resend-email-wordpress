@@ -3,10 +3,10 @@
  * Plugin Name: Resend Email Integration
  * Plugin URI: https://github.com/resend/resend-wordpress
  * Description: Integrates WordPress email functionality with Resend using the official Resend PHP SDK. Replaces wp_mail behavior to send all emails through Resend.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Brogrammers Agency
  * Author URI: https://brogrammersagency.com
- * Text Domain: resend-email
+ * Text Domain: resend-email-integration
  * Requires PHP: 8.1
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -26,7 +26,7 @@ if ( defined( 'RESEND_EMAIL_INTEGRATION_LOADED' ) ) {
 define( 'RESEND_EMAIL_INTEGRATION_LOADED', true );
 
 // Define plugin constants.
-define( 'RESEND_EMAIL_INTEGRATION_VERSION', '1.0.0' );
+define( 'RESEND_EMAIL_INTEGRATION_VERSION', '1.0.1' );
 define( 'RESEND_EMAIL_INTEGRATION_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RESEND_EMAIL_INTEGRATION_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'RESEND_EMAIL_INTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -46,8 +46,8 @@ if ( ! file_exists( $resend_email_integration_autoloader_path ) ) {
 			?>
 			<div class="notice notice-error">
 				<p>
-					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email' ); ?></strong>
-					<?php esc_html_e( 'Composer dependencies are missing. Please run `composer install` in the plugin directory.', 'resend-email' ); ?>
+					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email-integration' ); ?></strong>
+					<?php esc_html_e( 'Composer dependencies are missing. Please run `composer install` in the plugin directory.', 'resend-email-integration' ); ?>
 				</p>
 			</div>
 			<?php

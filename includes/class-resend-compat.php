@@ -70,11 +70,11 @@ class Resend_Compat {
 			?>
 			<div class="notice notice-error">
 				<p>
-					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email' ); ?></strong>
+					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email-integration' ); ?></strong>
 					<?php
 					printf(
 						/* translators: 1: Minimum PHP version, 2: Current PHP version */
-						esc_html__( 'This plugin requires PHP %1$s or higher. You are running PHP %2$s.', 'resend-email' ),
+						esc_html__( 'This plugin requires PHP %1$s or higher. You are running PHP %2$s.', 'resend-email-integration' ),
 						esc_html( self::MIN_PHP_VERSION ),
 						esc_html( PHP_VERSION )
 					);
@@ -89,8 +89,8 @@ class Resend_Compat {
 			?>
 			<div class="notice notice-error">
 				<p>
-					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email' ); ?></strong>
-					<?php esc_html_e( 'The Resend PHP SDK is not available. Please ensure Composer dependencies are installed.', 'resend-email' ); ?>
+					<strong><?php esc_html_e( 'Resend Email Integration:', 'resend-email-integration' ); ?></strong>
+					<?php esc_html_e( 'The Resend PHP SDK is not available. Please ensure Composer dependencies are installed.', 'resend-email-integration' ); ?>
 				</p>
 			</div>
 			<?php

@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=8.1",
-		"resend/resend-php": "^1.0"
+		"resend/resend-php": "^1.1"
 	},
 	"autoload": {
 		"classmap": [
