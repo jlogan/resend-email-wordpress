@@ -33,11 +33,6 @@ jobs:
         run: |
           composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
           
-      - name: Remove files not allowed in WordPress.org
-        run: |
-          rm -f .gitignore .gitattributes build-plugin.sh
-          rm -rf .github
-
       - name: Extract version from plugin header
         id: get_version
         run: |
